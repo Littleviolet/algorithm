@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.1)
+
+file(GLOB_RECURSE TEST_SRC_FILE src/*.cpp)
+
+include_directories(
+	${CMAKE_SOURCE_DIR}/thirdparty/gtest/include
+)
+
+link_directories(${CMAKE_SOURCE_DIR}/thirdparty/gtest/lib/win/$<CONFIGURATION>)
+
+set(TARGET_NAME AlgorithmUnitTest)
+add_executable(${TARGET_NAME} ${SRC_FILE} ${TEST_SRC_FILE})
+
+target_link_libraries(AlgorithmUnitTest
+	gtest
+	gtest_main
+)
+
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    #gtest
+    $<$<CONFIG:Release>:${CMAKE_SOURCE_DIR}/thirdparty/gtest/lib/win/Release/gtest.dll>
+    $<$<CONFIG:Release>:${CMAKE_SOURCE_DIR}/thirdparty/gtest/lib/win/Release/gtest_main.dll>
+    $<$<CONFIG:Debug>:${CMAKE_SOURCE_DIR}/thirdparty/gtest/lib/win/Debug/gtest.dll>
+    $<$<CONFIG:Debug>:${CMAKE_SOURCE_DIR}/thirdparty/gtest/lib/win/Debug/gtest_main.dll>
+    #dest
+    $<TARGET_FILE_DIR:${TARGET_NAME}>
+)
