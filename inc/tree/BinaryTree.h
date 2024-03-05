@@ -51,10 +51,10 @@ namespace tree
 			{
 				return root;
 			}
-	
+			
 			bool leftFound = Traversal(root->left, p, q, result);
 			bool rightFound = Traversal(root->right, p, q, result);
-			
+
 			//std::cout << root->val << std::endl;
 			bool currentFound = (root == p || root == q);
 			if ((leftFound && rightFound) || ((leftFound || rightFound) && currentFound))

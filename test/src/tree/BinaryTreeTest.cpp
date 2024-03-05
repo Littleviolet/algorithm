@@ -53,6 +53,9 @@ TEST(BinaryTreeTest, LowestCommonAncestorCase2)
     BinaryTree bTree;
     bTree.LevelOrderTraversal(head);
     TreeNode* node = bTree.LowestCommonAncestor(head, head->left, head->right);
+<<<<<<< HEAD
     ASSERT_TRUE(node != nullptr);
+=======
+>>>>>>> a62c54dbe9a3ba2addddb1d4c7f98cac5f58d8c2
     EXPECT_EQ(node->val, 3);
 }
