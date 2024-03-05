@@ -2,6 +2,8 @@
 #define QUICK_SORT_ALGO_H
 #include <vector>
 #include "SortAlgo.h"
+#include "Common.h"
+
 namespace sort
 {
     class QuickSortAlgo : SortAlgo
@@ -25,13 +27,6 @@ namespace sort
             QuickSort(nums, mid + 1, right);
         }
 
-        void Swap(int&left, int&right)
-        {
-            int tmp = left;
-            left = right;
-            right = tmp;
-        }
-
         int PartSort(std::vector<int>& nums, int left, int right) {
             int base = nums[left];
             int start = left;
@@ -44,13 +39,13 @@ namespace sort
                     {
                         ++left;
                     }
-                    Swap(nums[left], nums[right]);
+                    utils::Swap(nums[left], nums[right]);
                 } else
                 {
                     --right;
                 }
             }
-            Swap(nums[left], nums[start]);
+            utils::Swap(nums[left], nums[start]);
             return left;
         }
     };
