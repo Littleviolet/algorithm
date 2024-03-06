@@ -29,26 +29,35 @@ public:
 		else
 		{
 			ListNode* node = m_cache.at(key);
-			deleteNode(node);
-			addTail(node);
+			moveToTail(node);
 			return node->value;
 		}
 	}
 
 	void put(int key, int value) {
-		ListNode* node = new ListNode(key, value);
-		if (m_keyCount == m_capacity)
+		if (m_cache.count(key) == 0)
 		{
-			ListNode* firstNode = m_head.next;
-			m_cache.erase(firstNode->key);
-			m_head.next = firstNode->next;
-	/*		delete firstNode;
-			firstNode = nullptr;*/
-			--m_keyCount;
+			ListNode* node = new ListNode(key, value);
+			if (m_keyCount == m_capacity)
+			{
+				ListNode* firstNode = m_head.next;
+				m_cache.erase(firstNode->key);
+				m_head.next = firstNode->next;
+				firstNode->next->pre = &m_head;
+				delete firstNode;
+				firstNode = nullptr;
+				--m_keyCount;
+			}
+			addTail(node);
+			m_cache[key] = node;
+			++m_keyCount;
 		}
-		++m_keyCount;
-		m_cache[key] = node;
-		addTail(node);
+		else if (m_cache.count(key) != 0)
+		{
+			ListNode* node = m_cache.at(key);
+			node->value = value;
+			moveToTail(node);
+		}
 	}
 private:
 	void deleteNode(ListNode* node)
@@ -59,11 +68,16 @@ private:
 
 	void addTail(ListNode* node)
 	{
-		ListNode* pre = m_tail.pre;
-		m_tail.pre = node;
-		pre->next = node;
-		node->pre = pre;
 		node->next = &m_tail;
+		node->pre = m_tail.pre;
+		m_tail.pre->next = node;
+		m_tail.pre = node;
+	}
+
+	void moveToTail(ListNode* node)
+	{
+		deleteNode(node);
+		addTail(node);
 	}
 
 	std::unordered_map<int, ListNode*> m_cache;
