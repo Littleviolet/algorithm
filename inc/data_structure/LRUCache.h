@@ -86,4 +86,4 @@ private:
 	int m_capacity{ 0 };
 	int m_keyCount{ 0 };
 };
-#endif LRU_CACHE_H
+#endif // LRU_CACHE_H

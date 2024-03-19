@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <queue>
 #include <tree/BinaryTree.h>
+#include <climits>
 
 using namespace tree;
 
@@ -10,7 +11,7 @@ static TreeNode* CreateTree(std::vector<int>& nums)
         return nullptr;
     }
 
-    // Ê¹ÓÃ¶ÓÁÐ°´²ã´Î¹¹½¨¶þ²æÊ÷
+    // Ê¹ï¿½Ã¶ï¿½ï¿½Ð°ï¿½ï¿½ï¿½Î¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     std::queue<TreeNode*> q;
     TreeNode* root = new TreeNode(nums[0]);
     q.push(root);
@@ -19,13 +20,13 @@ static TreeNode* CreateTree(std::vector<int>& nums)
         TreeNode* current = q.front();
         q.pop();
 
-        // ¹¹½¨×ó×Ó½Úµã
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó½Úµï¿½
         if (nums[i] != INT_MAX) {
             current->left = new TreeNode(nums[i]);
             q.push(current->left);
         }
 
-        // ¹¹½¨ÓÒ×Ó½Úµã
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó½Úµï¿½
         if (i + 1 < nums.size() && nums[i + 1] != INT_MAX) {
             current->right = new TreeNode(nums[i + 1]);
             q.push(current->right);
